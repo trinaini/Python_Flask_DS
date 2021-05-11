@@ -5,6 +5,8 @@ from sqlalchemy import event
 from sqlalchemy.engine import Engine
 from flask_sqlalchemy  import SQLAlchemy
 
+import linked_list
+
 app = Flask(__name__)
 
 # configuration to use local file as database
@@ -59,7 +61,21 @@ def create_user():
 
 @app.route("/user/descending_id", methods = ["GET"])
 def get_all_users_descending():
-    pass
+    users = User.query.all()
+    all_users_ll = linked_list.LinkedList()
+
+    # adding in the beginning will return users in descending order
+    for user in users:
+        all_users_ll.insert_beginning(
+            {
+                "id": user.id,
+                "name": user.name,
+                "email": user.email,
+                "address": user.address,
+                "phone": user.phone,
+            }
+        )
+    return jsonify(all_users_ll.to_list()), 200
 
 @app.route("/user/ascending_id", methods = ["GET"])
 def get_all_users_ascending():
