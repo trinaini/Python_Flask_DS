@@ -24,6 +24,21 @@ class LinkedList:
             node = node.next_node
         return l
 
+
+    def get_user_by_id(self, user_id):
+        node = self.head
+
+        while node:
+
+            if node.data["id"] is int(user_id):
+                return node.data
+
+            node = node.next_node  
+
+        return None  
+        
+        
+
     def print_linked_list(self):
         ll_string = ""
         node = self.head
