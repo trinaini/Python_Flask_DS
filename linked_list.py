@@ -45,10 +45,10 @@ class LinkedList:
         new_node = Node(data, self.head)
         self.head = new_node
     
-    def insert_at_end(self):
+    def insert_at_end(self, data):
         if self.head is None:
             self.insert_beginning(data)
-        
+            return 
         # if self.last_node is None:
         #     node = self.head
         #     # while node.next_node:

@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, json, jsonify, request
 from sqlite3 import Connection as SQLite3Connection
 from datetime import datetime
 from sqlalchemy import event
@@ -79,7 +79,22 @@ def get_all_users_descending():
 
 @app.route("/user/ascending_id", methods = ["GET"])
 def get_all_users_ascending():
-    pass
+    users = User.query.all() 
+    all_users_asc_ll = linked_list.LinkedList()
+
+    #adding at the end of linked list will return users in ascending order
+
+    for user in users:
+        all_users_asc_ll.insert_at_end(
+            {
+                "id": user.id,
+                "name": user.name,
+                "email": user.email,
+                "address": user.address,
+                "phone": user.phone,
+            }
+        )
+    return jsonify(all_users_asc_ll.to_list()), 200
 
 @app.route("/user/<user_id>", methods = ["GET"])
 def get_user(user_id):
